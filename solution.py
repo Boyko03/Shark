@@ -1,4 +1,5 @@
 import sys
+import random
 
 class Card:
 	def __init__(self, value, paint):
@@ -8,21 +9,47 @@ class Card:
 class Person:
 	def __init__(self, name):
 		self.name = name
+		self.cards = []
+		#cards = [Card, Card, ...]
 
 class Team:
-	def __init__(self, p1, p2):
-		self.p1 = p1
-		self.p2 = p2
+	def __init__(self, name, teammates):
+		self.name = name
+		self.teammates = teammates
+		#teammates = (Person, Person)
+		self.wins = 0
 
-def player_input():
-	pass
+class Game:
+	def prepare():
+		self.team1, self.team2 = make_teams()
+		self.cards = shuffle()
 
-def shuffle():
-	pass
+	def make_teams():
+		pass
+
+	def shuffle():
+		#C - Club
+		#D - Diamond
+		#H - Heart
+		#S - Spade
+		pass
+
+	def draw_cards(team1, team2):
+		pass
+
+	def play():
+		#Some code
+
+		self.to_json()
+
+	def to_json():
+		pass
 
 def main():
-	team1, team2 = player_input()
-	cards = [Card(value, paint) for value, paint in shuffle()]
+	game = Game()
+	game.prepare()
+
+	game.play()
 
 if __name__ == '__main__':
 	main()
