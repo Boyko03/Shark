@@ -7,6 +7,26 @@ class Card:
 		self.value = value
 		self.paint = paint
 
+
+	def __str__(self):
+		return f'({self.value},{self.paint})'
+
+	def __repr__(self):
+		return f'Card {self}'
+
+	def __lt__(self, other):
+		return self.value < other.value
+
+	def __gt__(self, other):
+		return self.value > other.value
+
+	def __le__(self,other):
+		return self.value <= other.value
+
+	def __ge__(self, other):
+		return self.value >= other.value
+
+
 class Person:
 	def __init__(self, name):
 		self.name = name
@@ -23,8 +43,9 @@ class Team:
 
 class Game(Utls, Jsonable):
 	def prepare(self):
-		self.team1, self.team2 = self.make_teams()
+		self.team1, self.team2 = self.make_teams(name, teammates)
 		self.cards = shuffle()
+		draw_cards(team1, team2)
 		pass
 
 	def play(self):
