@@ -19,6 +19,7 @@ class Team:
 		self.teammates = teammates
 		# teammates = (Person, Person)
 		self.wins = 0
+		self.points = 0
 
 class Game(Utls, Jsonable):
 	def prepare(self):
