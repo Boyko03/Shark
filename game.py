@@ -1,5 +1,6 @@
 import sys
 import random
+from utls import Utls, Jsonable
 
 class Card:
 	def __init__(self, value, paint):
@@ -19,32 +20,16 @@ class Team:
 		# teammates = (Person, Person)
 		self.wins = 0
 
-class Game:
+class Game(Utls, Jsonable):
 	def prepare(self):
 		self.team1, self.team2 = self.make_teams()
 		self.cards = shuffle()
-		pass
-
-	def make_teams(self):
-		pass
-
-	def shuffle():
-		#C - Club
-		#D - Diamond
-		#H - Heart
-		#S - Spade
-		pass
-
-	def draw_cards(team1, team2):
 		pass
 
 	def play(self):
 		#Some code
 
 		self.to_json()
-
-	def to_json(self):
-		pass
 		
 if __name__ == '__main__':
 	main()
