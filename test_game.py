@@ -1,14 +1,5 @@
 import unittest
-from game import Game
-
-class TestCardClass(unittest.TestCase):
-	pass
-
-class TestPersonClass(unittest.TestCase):
-	pass
-
-class TestTeamClass(unittest.TestCase):
-	pass
+from game import Game, Card, Person, Team
 
 class TestGameClass(unittest.TestCase):
 	pass
