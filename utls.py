@@ -89,5 +89,5 @@ class Jsonable:
 		return self.json_history
 
 	def write_json(self):
-		with open('data.json', 'a') as f:
+		with open('data.json', 'w') as f:
 			f.write(self.jsoned)
