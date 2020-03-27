@@ -22,8 +22,8 @@ class Game(Utls, Jsonable):
 			self.game += 1
 			self.round = 0
 
-		self.jsoned = self.to_json()
-		self.write_json()
+			self.jsoned = self.to_json()
+			self.write_json()
 		
 if __name__ == '__main__':
 	main()
