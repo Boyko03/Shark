@@ -33,7 +33,7 @@ class TestCardClass(unittest.TestCase):
 
 	def test_cards_comparison_less_than_works_correctly_for_number_and_non_number_cards(self):
 
-		card = Card('9', 'D')
+		card = Card('8', 'D')
 		card1 = Card('J', 'S')
 
 		result = card < card1
@@ -210,6 +210,62 @@ class TestUtlsClass(unittest.TestCase):
 		self.assertEqual(len(team2.teammates[0].cards), len(first_teammate_team2_cards))
 		self.assertEqual(len(team1.teammates[1].cards), len(second_teammate_team1_cards))
 		self.assertEqual(len(team2.teammates[1].cards), len(second_teammate_team2_cards))
+
+
+	def test_sorting_cards_should_returns_sorted_list_of_cards(self):
+		team1 = Team('Malinka', (Person('Ivan'), Person('Gosho')))
+
+		team1.teammates[0].cards = [Card('9','D'), Card('J','C'),Card('K', 'S'), Card('Q', 'S'),Card('A','H') , Card('7','D'), Card('J','H'), Card('8','C')]
+
+		result = Utls.sort_cards(team1.teammates[0].cards)
+
+		self.assertEqual(str(result), '[8 ♣, 11 ♣, 7 ♦, 9 ♦, 11 ♥, 14 ♥, 12 ♠, 13 ♠]')
+
+	def test_checking_for_belote_function_should_return_list_of_belotes(self):
+		team1 = Team('Malinka', (Person('Ivan'), Person('Gosho')))
+
+		team1.teammates[0].cards = [Card('9','D'),Card('Q','D'),Card('K','D') ,Card('Q','C'),Card('K', 'S'), Card('Q', 'S'),Card('A','H') , Card('7','D'), Card('J','H'), Card('8','C')]
+
+		sorted_list = Utls.sort_cards(team1.teammates[0].cards)
+
+		belote_list = Utls.check_if_there_is_belote(sorted_list)
+
+		self.assertEqual(belote_list, ['Belote - D','Belote - S'])
+
+	def test_checking_function_if_there_is_tierce_in_the_cards_should_return_list_of_tierces(self):
+		team1 = Team('Malinka', (Person('Ivan'), Person('Gosho')))
+
+		team1.teammates[0].cards = [Card('9','D'),Card('Q','D'),Card('K','D') ,Card('Q','C'),Card('8','D'),Card('K', 'S'), Card('Q', 'S'),Card('A','H') , Card('7','D'), Card('J','H'), Card('8','C')]
+
+		sorted_list = Utls.sort_cards(team1.teammates[0].cards)
+
+		tierce_list = Utls.check_if_there_is_tierce(sorted_list)
+
+		self.assertEqual(tierce_list, [['Tierce','D','9']])
+
+	def test_checking_function_if_there_is_quarte_in_the_cards_should_return_list_of_quartes(self):
+		team1 = Team('Malinka', (Person('Ivan'), Person('Gosho')))
+
+		team1.teammates[0].cards = [Card('9','D'),Card('Q','D'),Card('K','D'), Card('T', 'D') ,Card('Q','C'),Card('8','D'),Card('K', 'S'), Card('Q', 'S'),Card('A','H') , Card('7','D'), Card('J','H'), Card('8','C')]
+
+		sorted_list = Utls.sort_cards(team1.teammates[0].cards)
+
+		quarte_list = Utls.check_if_there_is_quarte(sorted_list)
+
+		self.assertEqual(quarte_list, [['Quarte','D','10']])
+
+	def test_checking_function_if_there_is_quinte_in_the_cards_should_return_list_of_quintes(self):
+		team1 = Team('Malinka', (Person('Ivan'), Person('Gosho')))
+
+		team1.teammates[0].cards = [Card('9','D'),Card('Q','D'),Card('K','D'), Card('T', 'D') ,Card('Q','C'),Card('J', 'D'),Card('8','D'),Card('K', 'S'), Card('Q', 'S'),Card('A','H') , Card('7','D'), Card('J','H'), Card('8','C')]
+
+		sorted_list = Utls.sort_cards(team1.teammates[0].cards)
+
+		quinte_list = Utls.check_if_there_is_quinte(sorted_list)
+
+		self.assertEqual(quinte_list, [['Quinte','D','11'],['Quinte','D','12'],['Quinte','D','13']])
+
+	
 
 
 class TestJsonableClass(unittest.TestCase):

@@ -19,8 +19,7 @@ class Card:
 		}
 		return f'{self.value} {paints[self.paint]}'
 
-
-	def __lt__(self, other):
+	def __check_card_value(self):
 		if self.value == 'T':
 			self.value = 10
 		if self.value == 'J':
@@ -32,93 +31,32 @@ class Card:
 		if self.value == 'A':
 			self.value = 14
 
-		if other.value == 'T':
-			other.value = 10
-		if other.value == 'J':
-			other.value = 11
-		if other.value == 'Q':
-			other.value = 12
-		if other.value == 'K':
-			other.value = 13
-		if other.value == 'A':
-			other.value = 14
-		
+		return self.value
+
+
+	def __lt__(self, other):
+		self.__check_card_value()
+		other.__check_card_value()
+
 		return int(self.value) < int(other.value)
 
 	def __gt__(self, other):
-		if self.value == 'T':
-			self.value = 10
-		if self.value == 'J':
-			self.value = 11
-		if self.value == 'Q':
-			self.value = 12
-		if self.value == 'K':
-			self.value = 13
-		if self.value == 'A':
-			self.value = 14
-
-		if other.value == 'T':
-			other.value = 10
-		if other.value == 'J':
-			other.value = 11
-		if other.value == 'Q':
-			other.value = 12
-		if other.value == 'K':
-			other.value = 13
-		if other.value == 'A':
-			other.value = 14
+		self.__check_card_value()
+		other.__check_card_value()
 		
 		return int(self.value) > int(other.value)
 
 
 	def __le__(self,other):
-		if self.value == 'T':
-			self.value = 10
-		if self.value == 'J':
-			self.value = 11
-		if self.value == 'Q':
-			self.value = 12
-		if self.value == 'K':
-			self.value = 13
-		if self.value == 'A':
-			self.value = 14
-
-		if other.value == 'T':
-			other.value = 10
-		if other.value == 'J':
-			other.value = 11
-		if other.value == 'Q':
-			other.value = 12
-		if other.value == 'K':
-			other.value = 13
-		if other.value == 'A':
-			other.value = 14
+		self.__check_card_value()
+		other.__check_card_value()
 		
 		return int(self.value) <= int(other.value)
 
 
 	def __ge__(self, other):
-		if self.value == 'T':
-			self.value = 10
-		if self.value == 'J':
-			self.value = 11
-		if self.value == 'Q':
-			self.value = 12
-		if self.value == 'K':
-			self.value = 13
-		if self.value == 'A':
-			self.value = 14
-
-		if other.value == 'T':
-			other.value = 10
-		if other.value == 'J':
-			other.value = 11
-		if other.value == 'Q':
-			other.value = 12
-		if other.value == 'K':
-			other.value = 13
-		if other.value == 'A':
-			other.value = 14
+		self.__check_card_value()
+		other.__check_card_value()
 		
 		return int(self.value) >= int(other.value)
 
@@ -186,6 +124,81 @@ class Utls:
 		team2.teammates[1].cards = cards_list[24:]
 
 		return team1.teammates[0].cards, team2.teammates[0].cards, team1.teammates[1].cards, team2.teammates[1].cards
+
+	def sort_cards(cards):
+		clubs_list = []
+		diamonds_list = []
+		hearts_list = []
+		spades_list = []
+
+		for card in cards: #sorting by paint
+			if card.paint == 'C':
+				clubs_list.append(card)
+			if card.paint == 'D':
+				diamonds_list.append(card)
+			if card.paint == 'H':
+				hearts_list.append(card)
+			if card.paint == 'S':
+				spades_list.append(card)
+
+		if len(clubs_list) != 0: #sorting by value
+			clubs_list = sorted(clubs_list)
+		if len(diamonds_list) != 0:
+			diamonds_list = sorted(diamonds_list)
+		if len(hearts_list) != 0:
+			hearts_list = sorted(hearts_list)
+		if len(spades_list) != 0:
+			spades_list = sorted(spades_list)
+
+		temp = []
+
+		temp = clubs_list + diamonds_list + hearts_list + spades_list
+
+		return temp 
+
+	def check_if_there_is_belote(cards):
+		belote_list = []
+		for i in range(len(cards)-1):
+			if cards[i].value == 12:
+				if cards[i+1].value == 13:
+					if cards[i].paint == cards[i+1].paint:
+						belote_list.append(str('Belote - ') + str(cards[i].paint))
+
+		return belote_list
+
+	def check_if_there_is_tierce(cards):
+		tierce_list = []
+		for i in range(len(cards)-2):
+			if int(cards[i].value) == int(cards[i+1].value) - 1:
+				if int(cards[i+1].value) == int(cards[i+2].value) - 1:
+					if cards[i].paint == cards[i+1].paint and cards[i+1].paint == cards[i+2].paint:
+						tierce_list.append([str('Tierce'),str(cards[i].paint),str(cards[i+2].value)])
+
+		return tierce_list
+
+	def check_if_there_is_quarte(cards):
+		quarte_list = []
+		for i in range(len(cards)-3):
+			if int(cards[i].value) == int(cards[i+1].value) - 1:
+				if int(cards[i+1].value) == int(cards[i+2].value) - 1:
+					if int(cards[i+2].value) == int(cards[i+3].value) - 1:
+						if cards[i].paint == cards[i+1].paint and cards[i+1].paint == cards[i+2].paint and cards[i+2].paint == cards[i+3].paint :
+							quarte_list.append([str('Quarte'),str(cards[i].paint),str(cards[i+3].value)])
+
+		return quarte_list
+
+	def check_if_there_is_quinte(cards):
+		quinte_list = []
+		for i in range(len(cards)-4):
+			if int(cards[i].value) == int(cards[i+1].value) - 1:
+				if int(cards[i+1].value) == int(cards[i+2].value) - 1:
+					if int(cards[i+2].value) == int(cards[i+3].value) - 1:
+						if int(cards[i+3].value) == int(cards[i+4].value) - 1:
+							if cards[i].paint == cards[i+1].paint and cards[i+1].paint == cards[i+2].paint and cards[i+2].paint == cards[i+3].paint and cards[i+3].paint == cards[i+4].paint:
+								quinte_list.append([str('Quinte'),str(cards[i].paint),str(cards[i+4].value)])
+
+		return quinte_list	
+
 
 		
 
