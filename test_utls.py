@@ -186,7 +186,7 @@ class TestTeamClass(unittest.TestCase):
 
 class TestUtlsClass(unittest.TestCase):
 	def test_shuffle_function_should_return_shuffled_list_of_Card(self):
-		cards = [Card(value,paint) for value in [val for val in '79TJQKA'] for paint in [p for p in 'CDHS']]
+		cards = [Card(value,paint) for value in [val for val in '789TJQKA'] for paint in [p for p in 'CDHS']]
 
 		shuffled_cards = Utls.shuffle()
 		
@@ -265,6 +265,16 @@ class TestUtlsClass(unittest.TestCase):
 
 		self.assertEqual(quinte_list, [['Quinte','D','11'],['Quinte','D','12'],['Quinte','D','13']])
 
+	def test_checking_if_there_is_carre_in_the_cards_should_return_list_of_carres(self):
+		team1 = Team('Malinka', (Person('Ivan'), Person('Gosho')))
+
+		team1.teammates[0].cards = [Card('9','C'), Card('9','D'), Card('9','H'), Card('9','S'), Card('7','S'), Card('7','D')]
+
+		sorted_list = Utls.sort_cards(team1.teammates[0].cards)
+
+		carres_list = Utls.check_if_there_is_carre(sorted_list)
+
+		self.assertEqual(carres_list, [['Carre','9']])
 	
 
 

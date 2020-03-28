@@ -94,9 +94,23 @@ class Team:
 
 class Utls:	
 
-	def make_teams(self):	
-		team1 = Team(sys.argv[1], (Person(sys.argv[2]), Person(sys.argv[3])))
-		team2 = Team(sys.argv[4], (Person(sys.argv[5]), Person(sys.argv[6])))
+	def make_teams(self):
+		first_team_name = input('Team 1 Name: ')
+		second_team_name = input('Team 2 Name: ')
+		print(first_team_name, end=' ')
+		teammates_team1 = input('players: ')
+		print(second_team_name, end=' ')
+		teammates_team2 = input('players: ')
+
+		first_teammate_team1 = teammates_team1.split(', ')[0]
+		second_teammate_team1 = teammates_team1.split(', ')[1]
+
+		first_teammate_team2 = teammates_team2.split(', ')[0]
+		second_teammate_team2 = teammates_team2.split(', ')[1]
+		
+
+		team1 = Team(first_team_name, (Person(first_teammate_team1), Person(second_teammate_team1)))
+		team2 = Team(second_team_name, (Person(first_teammate_team2), Person(second_teammate_team2)))
 
 		return Team(team1), Team(team2)
 
@@ -199,7 +213,28 @@ class Utls:
 
 		return quinte_list	
 
+	#helper function
+	def count_letter(cards, value):
+		count = 0
+		for c in cards:
+			if c.value == value:
+				count += 1
+		return count
 
+	def check_if_there_is_carre(cards):
+		carre_list = []
+		d={}
+		for card in cards:
+			if card.value not in d:
+				x = Utls.count_letter(cards, card.value)
+				d.update({card.value: x})
+
+		for key, value in d.items():
+			if value == 4:
+				k = key
+				carre_list.append(['Carre', str(key)])
+
+		return carre_list
 		
 
 class Jsonable:
