@@ -230,7 +230,7 @@ class TestUtlsClass(unittest.TestCase):
 
 		belote_list = Utls.check_if_there_is_belote(sorted_list)
 
-		self.assertEqual(belote_list, ['Belote - D','Belote - S'])
+		self.assertEqual(belote_list, [['Belote','D'],['Belote','S']])
 
 	def test_checking_function_if_there_is_tierce_in_the_cards_should_return_list_of_tierces(self):
 		team1 = Team('Malinka', (Person('Ivan'), Person('Gosho')))

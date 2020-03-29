@@ -129,15 +129,6 @@ class Utls:
 		
 		return cards
 
-	def draw_cards(team1, team2):
-		cards_list = Utls.shuffle()
-
-		team1.teammates[0].cards = cards_list[:8]
-		team2.teammates[0].cards = cards_list[8:16]
-		team1.teammates[1].cards = cards_list[16:24]
-		team2.teammates[1].cards = cards_list[24:]
-
-		return team1.teammates[0].cards, team2.teammates[0].cards, team1.teammates[1].cards, team2.teammates[1].cards
 
 	def sort_cards(cards):
 		clubs_list = []
@@ -170,13 +161,28 @@ class Utls:
 
 		return temp 
 
+	def draw_cards(team1, team2):
+		cards_list = Utls.shuffle()
+
+		team1.teammates[0].cards = cards_list[:8]
+		team2.teammates[0].cards = cards_list[8:16]
+		team1.teammates[1].cards = cards_list[16:24]
+		team2.teammates[1].cards = cards_list[24:]
+
+		team1.teammates[0].cards = Utls.sort_cards(team1.teammates[0].cards)		
+		team1.teammates[1].cards = Utls.sort_cards(team1.teammates[1].cards)		
+		team2.teammates[0].cards = Utls.sort_cards(team2.teammates[0].cards)		
+		team2.teammates[1].cards = Utls.sort_cards(team2.teammates[1].cards)		
+
+		return team1.teammates[0].cards, team2.teammates[0].cards, team1.teammates[1].cards, team2.teammates[1].cards
+
 	def check_if_there_is_belote(cards):
 		belote_list = []
 		for i in range(len(cards)-1):
 			if cards[i].value == 12:
 				if cards[i+1].value == 13:
 					if cards[i].paint == cards[i+1].paint:
-						belote_list.append(str('Belote - ') + str(cards[i].paint))
+						belote_list.append([str('Belote'), str(cards[i].paint)])
 
 		return belote_list
 
@@ -214,7 +220,7 @@ class Utls:
 		return quinte_list	
 
 	#helper function
-	def count_letter(cards, value):
+	def count_cards_value(cards, value):
 		count = 0
 		for c in cards:
 			if c.value == value:
@@ -226,7 +232,7 @@ class Utls:
 		d={}
 		for card in cards:
 			if card.value not in d:
-				x = Utls.count_letter(cards, card.value)
+				x = Utls.count_cards_value(cards, card.value)
 				d.update({card.value: x})
 
 		for key, value in d.items():
