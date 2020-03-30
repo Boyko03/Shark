@@ -395,7 +395,42 @@ class TestJsonableClass(unittest.TestCase):
 		expected = json.dumps(game.json_history, indent=4)
 
 		self.assertEqual(result, expected)
-		
+	
+	def test_game_write_json_creates_file_data_json(self):
+		game = Game()
+		team1 = Team('team1', (Person('p1'), Person('p2')))
+		team2 = Team('team2', (Person('p3'), Person('p4')))
+		round_ = 0
+		expected = {}
+
+		for i in range(2):
+			team1.teammates[0].cards = [Card(value, 'C') for value in [val for val in '789TJQKA']]
+			team1.teammates[1].cards = [Card(value, 'D') for value in [val for val in '789TJQKA']]
+			team2.teammates[0].cards = [Card(value, 'H') for value in [val for val in '789TJQKA']]
+			team2.teammates[1].cards = [Card(value, 'S') for value in [val for val in '789TJQKA']]
+			game.team1 = team1
+			game.team2 = team2
+			teams = (team1, team2)
+
+			game.json_history = game.add_to_json()
+			expected['game 1:'] = {f'round {round_}:': {}}
+			for i in range(2):
+				expected['game 1:'][f'round {round_}:'][teams[i].name] = {}
+				for j in range(2):
+					team = teams[i]
+					p = team.teammates[j]
+					expected['game 1:'][f'round {round_}:'][team.name][p.name] = {}
+					expected['game 1:'][f'round {round_}:'][team.name][p.name] = {
+						'cards': p.cards,
+						'announcements': p.announcements,
+						'points': p.points
+					}
+			game.jsoned = game.to_json()
+			game.write_json()
+			round_ += 1
+
+		#self.maxDiff = None
+		#self.assertEqual(expected, game.json_history)
 
 if __name__ == '__main__':
 	unittest.main()

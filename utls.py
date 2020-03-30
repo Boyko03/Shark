@@ -287,7 +287,7 @@ class Jsonable:
 			for round_ in range(self.round + 1):
 				for team in teams:
 					for p in team.teammates:
-						tmp = self.json_history[f'game {game+1}:'][f'round {round_+1}:'][team.name][p.name]['cards'] = [str(card) for card in p.cards]
+						self.json_history[f'game {game+1}:'][f'round {round_+1}:'][team.name][p.name]['cards'] = [str(card) for card in p.cards]
 
 		return json.dumps(self.json_history, indent=indent)
 

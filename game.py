@@ -8,6 +8,7 @@ class Game(Utls, Jsonable):
 		self.round = 0
 		self.game = 0
 		self.has_winner = False
+		self.jsoned = ''
 
 	def prepare(self):
 		self.team1, self.team2 = self.make_teams()
