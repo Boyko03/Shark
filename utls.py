@@ -76,7 +76,7 @@ class Person:
 
 		self.name = name
 		self.cards = []
-    self.announcements = []
+		self.announcements = []
 		self.points = 0
 		#cards = [Card, Card, ...]
 
