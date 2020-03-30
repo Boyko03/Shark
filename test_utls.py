@@ -235,13 +235,13 @@ class TestUtlsClass(unittest.TestCase):
 	def test_checking_function_if_there_is_tierce_in_the_cards_should_return_list_of_tierces(self):
 		team1 = Team('Malinka', (Person('Ivan'), Person('Gosho')))
 
-		team1.teammates[0].cards = [Card('9','D'),Card('Q','D'),Card('K','D') ,Card('Q','C'),Card('8','D'),Card('K', 'S'), Card('Q', 'S'),Card('A','H') , Card('7','D'), Card('J','H'), Card('8','C')]
+		team1.teammates[0].cards = [Card('9','D'),Card('Q','D'),Card('K','D') ,Card('Q','C'),Card('8','D'),Card('J', 'D'), Card('Q', 'S'),Card('A','H') , Card('7','D'), Card('J','H'), Card('8','C')]
 
 		sorted_list = Utls.sort_cards(team1.teammates[0].cards)
 
 		tierce_list = Utls.check_if_there_is_tierce(sorted_list)
 
-		self.assertEqual(tierce_list, [['Tierce','D','9']])
+		self.assertEqual(tierce_list, [['Tierce','D','9'],['Tierce','D', '13']])
 
 	def test_checking_function_if_there_is_quarte_in_the_cards_should_return_list_of_quartes(self):
 		team1 = Team('Malinka', (Person('Ivan'), Person('Gosho')))
@@ -263,7 +263,7 @@ class TestUtlsClass(unittest.TestCase):
 
 		quinte_list = Utls.check_if_there_is_quinte(sorted_list)
 
-		self.assertEqual(quinte_list, [['Quinte','D','11'],['Quinte','D','12'],['Quinte','D','13']])
+		self.assertEqual(quinte_list, ['Quinte','D','13'])
 
 	def test_checking_if_there_is_carre_in_the_cards_should_return_list_of_carres(self):
 		team1 = Team('Malinka', (Person('Ivan'), Person('Gosho')))

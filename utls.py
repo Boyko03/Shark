@@ -19,6 +19,7 @@ class Card:
 		}
 		return f'{self.value} {paints[self.paint]}'
 
+
 	def __check_card_value(self):
 		if self.value == 'T':
 			self.value = 10
@@ -59,6 +60,12 @@ class Card:
 		other.__check_card_value()
 		
 		return int(self.value) >= int(other.value)
+
+	def __eq__(self, other):
+		self.__check_card_value()
+		other.__check_card_value()
+
+		return int(self.value) == int(other.value)
 
 
 class Person:
@@ -193,6 +200,7 @@ class Utls:
 				if int(cards[i+1].value) == int(cards[i+2].value) - 1:
 					if cards[i].paint == cards[i+1].paint and cards[i+1].paint == cards[i+2].paint:
 						tierce_list.append([str('Tierce'),str(cards[i].paint),str(cards[i+2].value)])
+						i+=3
 
 		return tierce_list
 
@@ -204,6 +212,8 @@ class Utls:
 					if int(cards[i+2].value) == int(cards[i+3].value) - 1:
 						if cards[i].paint == cards[i+1].paint and cards[i+1].paint == cards[i+2].paint and cards[i+2].paint == cards[i+3].paint :
 							quarte_list.append([str('Quarte'),str(cards[i].paint),str(cards[i+3].value)])
+							i+=4
+							
 
 		return quarte_list
 
@@ -216,8 +226,14 @@ class Utls:
 						if int(cards[i+3].value) == int(cards[i+4].value) - 1:
 							if cards[i].paint == cards[i+1].paint and cards[i+1].paint == cards[i+2].paint and cards[i+2].paint == cards[i+3].paint and cards[i+3].paint == cards[i+4].paint:
 								quinte_list.append([str('Quinte'),str(cards[i].paint),str(cards[i+4].value)])
+		
+		if len(quinte_list) > 1:
+			quinte = max(quinte_list, key=lambda x: x[2])
+			return quinte
+		elif len(quinte_list) == 1:
+			return quinte_list[0]
+		return quinte_list
 
-		return quinte_list	
 
 	#helper function
 	def count_cards_value(cards, value):
@@ -238,10 +254,11 @@ class Utls:
 		for key, value in d.items():
 			if value == 4:
 				k = key
-				carre_list.append(['Carre', str(key)])
+				if key != '7' and key != '8':
+					carre_list.append(['Carre', str(key)])
 
 		return carre_list
-		
+
 
 class Jsonable:
 
