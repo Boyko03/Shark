@@ -1,8 +1,6 @@
 import sys
 import random
-
 from utls import Utls, Card, Person, Team, Jsonable
-
 
 class Game(Utls, Jsonable):
 	def __init__(self):
@@ -154,8 +152,12 @@ class Game(Utls, Jsonable):
 				self.json_history = self.add_to_json()
 				self.jsoned = self.to_json()
 				self.write_json()
+        self.write_result()
 				self.round += 1
 
+      self.has_winner = True
+      self.write_result()
+      self.has_winner = False
 			self.game += 1
 			self.round = 0
 		

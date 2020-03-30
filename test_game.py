@@ -1,8 +1,6 @@
 import unittest
 from game import Card, Person, Team, Game, Utls
-
 import random
-
 
 class TestGameClass(unittest.TestCase):
 	def test_random_choice_of_contracts(self):
