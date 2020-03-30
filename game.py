@@ -6,6 +6,7 @@ class Game(Utls, Jsonable):
 		self.json_history = {}
 		self.round = 0
 		self.game = 0
+		self.has_winner = False
 
 	def prepare(self):
 		self.team1, self.team2 = self.make_teams()
@@ -16,12 +17,15 @@ class Game(Utls, Jsonable):
 	def play(self):
 		while self.team1.wins < 2 and self.team2.wins < 2:
 			while self.team1.points < 150 and self.team2.points < 150 or self.team1.points == self.team2.points:
-				
+
 				self.json_history = self.add_to_json()
 				self.jsoned = self.to_json()
 				self.write_json()
+				self.write_result()
 				self.round += 1
 
+			self.has_winner = True
+			self.write_result()
 			self.game += 1
 			self.round = 0
 		

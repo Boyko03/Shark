@@ -30,6 +30,7 @@ class Team:
 		# teammates = (Person, Person)
 		self.wins = 0
 		self.points = 0
+		self.new_points = 0
 
 class Utls:
 	def make_teams(self):
@@ -53,8 +54,22 @@ class Utls:
 	def draw_cards(self, team1, team2):
 		pass
 
-	def write_result(self, team1, team2):
-		pass
+	def write_result(self):
+		l = len((f'\t{self.team1.name}\t|\t{self.team2.name}\t').expandtabs(4))
+		if self.game == 0 and self.round == 0:
+			with open('result.txt', 'w') as f:
+				f.write((f'\t{self.team1.name}\t|\t{self.team2.name}\t\r\n').expandtabs(4))
+				f.write(f'{"=" * l}\r\n')
+				f.write((f'{self.team1.points}\t\t|{self.team2.points}\t\t\r\n').expandtabs(len(self.team1.name) + 1))
+		elif not self.has_winner:
+			with open('result.txt', 'a') as f:
+				f.write((f'{self.team1.points} + {self.team1.new_points}\t|{self.team2.points} + {self.team2.new_points}\t\r\n').expandtabs(len(self.team1.name) + 1))
+		else:
+			with open('result.txt', 'a') as f:
+				f.write((f'{self.team1.points + self.team1.new_points}\t\t|{self.team2.points + self.team2.new_points}\t\t\r\n').expandtabs(len(self.team1.name) + 1))
+				f.write(f'{"=" * l}\r\n')
+				f.write((f'\t({self.team1.wins})\t|\t({self.team2.wins})\t\r\n').expandtabs(len(self.team1.name) + 1))
+				f.write(f'{"=" * l}\r\n')
 
 class Jsonable:
 	def to_json(self, indent=4):
