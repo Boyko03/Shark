@@ -9,10 +9,11 @@ class Game(Utls, Jsonable):
 		self.json_history = {}
 		self.round = 0
 		self.game = 0
+		self.has_winner = False
 		self.players_order = [team1.teammates[0], team2.teammates[0], team1.teammates[1], team2.teammates[1]]
 
 	def prepare(self):
-		self.team1, self.team2 = self.make_teams(name, teammates)
+		self.team1, self.team2 = self.make_teams()
 
 
 	def announce_contracts():
@@ -149,6 +150,7 @@ class Game(Utls, Jsonable):
 					pass
 
 				players_order = rotate_players_order(players_order)
+				
 				self.json_history = self.add_to_json()
 				self.jsoned = self.to_json()
 				self.write_json()
